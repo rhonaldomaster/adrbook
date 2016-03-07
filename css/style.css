@@ -1,0 +1,25 @@
+*{
+    font-family: Helvetica,sans-serif;
+    font-size: 1em;
+}
+/*html,body {
+    height: 100%;
+    width: 100%;
+}*/
+h1{
+    font-size: 1.8em;
+}
+.link{
+    color: #fff;
+    text-decoration: none;
+}
+.inside-input{
+    margin-left: -15.6em;
+}
+.maincontent{
+    margin-top: 3.5em;
+    padding: 3em 5em;
+}
+.maincontent__favorites__title{
+    color: lightgray;
+}

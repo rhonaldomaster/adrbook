@@ -1,0 +1,105 @@
+@font-face {
+    font-family: 'adrbook';
+    src:    url('fonts/adrbook.eot?o7bj17');
+    src:    url('fonts/adrbook.eot?o7bj17#iefix') format('embedded-opentype'),
+        url('fonts/adrbook.ttf?o7bj17') format('truetype'),
+        url('fonts/adrbook.woff?o7bj17') format('woff'),
+        url('fonts/adrbook.svg?o7bj17#adrbook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'adrbook' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-home3:before {
+    content: "\e900";
+}
+.icon-pencil:before {
+    content: "\e901";
+}
+.icon-image:before {
+    content: "\e902";
+}
+.icon-play:before {
+    content: "\e903";
+}
+.icon-file-text:before {
+    content: "\e904";
+}
+.icon-profile:before {
+    content: "\e905";
+}
+.icon-file-empty:before {
+    content: "\e906";
+}
+.icon-phone:before {
+    content: "\e907";
+}
+.icon-address-book:before {
+    content: "\e908";
+}
+.icon-display:before {
+    content: "\e909";
+}
+.icon-mobile2:before {
+    content: "\e90a";
+}
+.icon-tablet:before {
+    content: "\e90b";
+}
+.icon-tv:before {
+    content: "\e90c";
+}
+.icon-undo:before {
+    content: "\e90d";
+}
+.icon-redo:before {
+    content: "\e90e";
+}
+.icon-user:before {
+    content: "\e90f";
+}
+.icon-spinner9:before {
+    content: "\e910";
+}
+.icon-search:before {
+    content: "\e911";
+}
+.icon-cross:before {
+    content: "\e912";
+}
+.icon-checkmark:before {
+    content: "\e913";
+}
+.icon-mail2:before {
+    content: "\e914";
+}
+.icon-google-plus:before {
+    content: "\e915";
+}
+.icon-facebook:before {
+    content: "\e916";
+}
+.icon-facebook2:before {
+    content: "\e917";
+}
+.icon-instagram:before {
+    content: "\e918";
+}
+.icon-twitter:before {
+    content: "\e919";
+}
+
