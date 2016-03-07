@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'adrbook';
-    src:    url('fonts/adrbook.eot?o7bj17');
-    src:    url('fonts/adrbook.eot?o7bj17#iefix') format('embedded-opentype'),
-        url('fonts/adrbook.ttf?o7bj17') format('truetype'),
-        url('fonts/adrbook.woff?o7bj17') format('woff'),
-        url('fonts/adrbook.svg?o7bj17#adrbook') format('svg');
+    src:    url('fonts/adrbook.eot?bbcuw2');
+    src:    url('fonts/adrbook.eot?bbcuw2#iefix') format('embedded-opentype'),
+        url('fonts/adrbook.ttf?bbcuw2') format('truetype'),
+        url('fonts/adrbook.woff?bbcuw2') format('woff'),
+        url('fonts/adrbook.svg?bbcuw2#adrbook') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,12 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-star-full:before {
+    content: "\e91b";
+}
+.icon-star-empty:before {
+    content: "\e91a";
+}
 .icon-home3:before {
     content: "\e900";
 }
