@@ -6,6 +6,9 @@
     height: 100%;
     width: 100%;
 }*/
+body{
+    background-color: #eee;
+}
 h1{
     font-size: 1.8em;
 }
@@ -19,7 +22,26 @@ h1{
 .maincontent{
     margin-top: 3.5em;
     padding: 3em 5em;
+    position: relative;
 }
 .maincontent__favorites__title{
+    color: lightgray;
+}
+.contact-list{
+    background-color: #fff;
+    width: 100%;
+}
+.contact-list__item{
+    border-bottom: 0.1em solid lightgray;
+    padding: 0.3em 1em;
+}
+.contact-list__item_col{
+    display: inline-block;
+    width: 19.6%;
+}
+.textblue{
+    color: #55ACEE;
+}
+.textlgray{
     color: lightgray;
 }
