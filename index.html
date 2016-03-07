@@ -13,6 +13,8 @@
 		<link rel="stylesheet" href="css/icomoon.css"/>
 		<link rel="stylesheet" href="css/style.css"/>
 		<link rel="stylesheet" href="css/header.css"/>
+		<link rel="stylesheet" href="css/contactlist.css"/>
+		<link rel="stylesheet" href="css/wmodal.css"/>
 		<!-- /css -->
     </head>
     <body>
@@ -28,21 +30,96 @@
         <article class="maincontent">
             <section class="maincontent__favorites">
                 <div class="maincontent__favorites__title">Favoritos</div>
-                <div class="contact-list">
-                    <div class="contact-list__item">
-                        <div class="contact-list__item_col">img nombre</div>
-                        <div class="contact-list__item_col"><span class="icon-twitter textblue"></span> @tw</div>
-                        <div class="contact-list__item_col"><span class="icon-mail2 textlgray"></span> mail</div>
-                        <div class="contact-list__item_col"><span class="icon-phone textlgray"></span> telef</div>
-                        <div class="contact-list__item_col">fav</td>
-                    </div>
-                </div>
-            </section>
-            <section class="maincontent__contacts">
-                <div class="maincontent__favorites__title">Todos</div>
                 <div class="contact-list"></div>
             </section>
+            <section class="maincontent__contacts">
+                <div class="maincontent__contacts__title">Todos</div>
+                <div class="contact-list"></div>
+            </section>
+            <footer class="footer">
+                <span class="icon-plus button-primary button-circle" onclick="adrbook.openModal();"></span>
+            </footer>
         </article>
+        <div class="bgmodal">
+            <div class="wmodal"></div>
+        </div>
+        <script id="contact-template" type="text/x-handlebars-template">
+            <div class="contact-list__item">
+                <div class="contact-list__item_col">
+                    <img class="contact-list__item_contactimg" src="img/emilia.png" alt=""/>
+                    <span class="bold curpointer" onclick="adrbook.{{funcion}}();">{{nombre}}</span>
+                </div>
+                <div class="contact-list__item_col">
+                    <span class="icon-twitter textblue"></span>
+                    <span>{{twitter}}</span>
+                </div>
+                <div class="contact-list__item_col">
+                    <span class="icon-mail2 textlgray"></span>
+                    <span>{{email}}</span>
+                </div>
+                <div class="contact-list__item_col">
+                    <span class="icon-phone textlgray"></span>
+                    <span>{{telefono}}</span>
+                </div>
+                <div class="contact-list__item_col contact-list__item_col_fav">
+                    <span class="icon-star-full {{startype}} curpointer" onclick="adrbook.fav({{twit}});"></span>
+                </div>
+            </div>
+        </script>
+        <script id="wmodal-template" type="text/x-handlebars-template">
+            <div class="wmodal__body">
+                <div class="wmodal__body__left">
+                    <img class="profile-img" src="img/emilia.png" alt="userimage"/>
+                    <div class="contactname margintop">{{nombre}}</div>
+                    {{#if modify}}
+                    <button class="button button-primary button-favorite margintop">Agregar a favoritos</button>
+                    {{/if}}
+                </div>
+                <div class="wmodal__body__right">
+                    Contacto
+                    <form class="wmodal-form" action="#">
+                        <table class="tableform">
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="textlgray">Nombre:</td>
+                                <td><input type="text" name="nombre" class="tableform__textinput" value="{{nombre}}"/></td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-twitter textblue"></span></td>
+                                <td class="textlgray">Twitter:</td>
+                                <td><input type="text" name="twitter" class="tableform__textinput" value="{{twitter}}"/></td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-mail2 textlgray"></span></td>
+                                <td class="textlgray">Email:</td>
+                                <td><input type="text" name="email" class="tableform__textinput" value="{{email}}"/></td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-phone textlgray"></span></td>
+                                <td class="textlgray">Tel&eacute;fono:</td>
+                                <td><input type="text" name="telefono" class="tableform__textinput" value="{{telefono}}"/></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="textlgray">Direcci&oacute;n:</td>
+                                <td><input type="text" name="direccion" class="tableform__textinput" value="{{direccion}}"/></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="wmodal__foot margintop">
+                <button class="button button-cancel" onclick="adrbook.closeModal();">Cancelar</button>
+                <div class="button-horizontal-separator"></div>
+                <button class="button button-primary" onclick="adrbook.{{funcion}};">Guardar</button>
+            </div>
+        </script>
+        <script id="nocontacts-template" type="text/x-handlebars-template">
+            <div class="contact-list__item">No hay contactos a&uacute;n</div>
+        </script>
         <script src="js/jquery.js"></script>
+        <script src="js/handlebars.js"></script>
+        <script src="js/app.js"></script>
     </body>
 </html>

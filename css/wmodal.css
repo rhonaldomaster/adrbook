@@ -1,0 +1,58 @@
+.bgmodal{
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
+.wmodal{
+    background-color: #eee;
+    box-shadow: 0 0 0.2em #000;
+    margin: 10% auto;
+    padding: 2em;
+    position: relative;
+    width: 50%;
+    z-index: 4;
+}
+.wmodal__body__left{
+    display: inline-block;
+    float: left;
+    text-align: center;
+}
+.wmodal__body__right{
+    background-color: #fff;
+    box-shadow: 0.1em 0.1em 0.1em #ddd;
+    display: inline-block;
+    float: right;
+    height: 15em;
+    padding: 1em;
+    width: 64%;
+}
+.wmodal__foot{
+    text-align: right;
+}
+.wmodal-form{
+    margin-top: 1.2em;
+}
+.profile-img{
+    border-radius: 100%;
+    display: inline-block;
+    height: 8em;
+    width: 8em;
+}
+.close{
+    background: #000;
+    border-radius: 100%;
+    color: #fff;
+    font-weight: bold;
+    line-height: 1.5em;
+    position: absolute;
+    right: -0.8em;
+    text-align: center;
+    text-decoration: none;
+    top: -0.8em;
+    width: 1.5em;
+}

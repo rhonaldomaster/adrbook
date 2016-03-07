@@ -2,15 +2,14 @@
     font-family: Helvetica,sans-serif;
     font-size: 1em;
 }
-/*html,body {
-    height: 100%;
-    width: 100%;
-}*/
 body{
     background-color: #eee;
 }
 h1{
     font-size: 1.8em;
+}
+.clear{
+    clear: both;
 }
 .link{
     color: #fff;
@@ -19,29 +18,81 @@ h1{
 .inside-input{
     margin-left: -15.6em;
 }
-.maincontent{
-    margin-top: 3.5em;
-    padding: 3em 5em;
-    position: relative;
-}
-.maincontent__favorites__title{
-    color: lightgray;
-}
-.contact-list{
-    background-color: #fff;
-    width: 100%;
-}
-.contact-list__item{
-    border-bottom: 0.1em solid lightgray;
-    padding: 0.3em 1em;
-}
-.contact-list__item_col{
-    display: inline-block;
-    width: 19.6%;
-}
 .textblue{
     color: #55ACEE;
 }
 .textlgray{
     color: lightgray;
+}
+.textyellow{
+    color: #F6B500;
+}
+.textcyan{
+    color: #00BCD4;
+}
+.bold{
+    font-weight: bold;
+}
+.margintop{
+    margin-top: 1.2em;
+}
+.curpointer{
+    cursor: pointer;
+}
+.maincontent{
+    margin-top: 3.5em;
+    padding: 3em 5em;
+    position: relative;
+}
+.maincontent__favorites__title,.maincontent__contacts__title{
+    color: lightgray;
+}
+.maincontent__favorites{
+    margin-bottom: 2em;
+}
+.footer{
+    bottom: 0;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+}
+.button{
+    border: 0 none;
+    box-shadow: 0 0.2em 0.2em #aaa;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.8em;
+    text-align: center;
+    padding: 0.7em 1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 10em;
+}
+.button-primary{
+    background-color: #00BCD4;
+}
+.button-cancel{
+    background-color: #ccc;
+}
+.button-favorite{
+    width: 100%;
+}
+.button-circle{
+    border-radius: 100%;
+    padding: 0.5em;
+}
+.button-horizontal-separator{
+    display: inline-block;
+    margin-left: 0.5em;
+}
+.tableform{
+    width: 100%;
+}
+.tableform__textinput{
+    border: 0 none;
+    border-bottom: 0.1em solid lightgray;
+    padding: 0.4em;
+    width: 90%;
 }

@@ -1,0 +1,24 @@
+.contact-list{
+    background-color: #fff;
+    margin: 1em 0;
+    width: 100%;
+}
+.contact-list__item{
+    border-bottom: 0.1em solid lightgray;
+    padding: 0.3em 1em;
+}
+.contact-list__item_col{
+    display: inline-block;
+    width: 22%;
+}
+.contact-list__item_col_fav{
+    text-align: right;
+    width: 9%;
+}
+.contact-list__item_contactimg{
+    border-radius: 100%;
+    display: inline-block;
+    height: 1.5em;
+    margin-bottom: -0.2em;
+    width: 1.5em;
+}

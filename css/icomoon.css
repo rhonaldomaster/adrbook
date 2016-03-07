@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'adrbook';
-    src:    url('fonts/adrbook.eot?bbcuw2');
-    src:    url('fonts/adrbook.eot?bbcuw2#iefix') format('embedded-opentype'),
-        url('fonts/adrbook.ttf?bbcuw2') format('truetype'),
-        url('fonts/adrbook.woff?bbcuw2') format('woff'),
-        url('fonts/adrbook.svg?bbcuw2#adrbook') format('svg');
+    src:    url('fonts/adrbook.eot?zaoxcg');
+    src:    url('fonts/adrbook.eot?zaoxcg#iefix') format('embedded-opentype'),
+        url('fonts/adrbook.ttf?zaoxcg') format('truetype'),
+        url('fonts/adrbook.woff?zaoxcg') format('woff'),
+        url('fonts/adrbook.svg?zaoxcg#adrbook') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,15 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-plus:before {
+    content: "\e91c";
+}
+.icon-minus:before {
+    content: "\e91d";
+}
+.icon-cross:before {
+    content: "\e91e";
+}
 .icon-star-full:before {
     content: "\e91b";
 }
@@ -84,7 +93,7 @@
 .icon-search:before {
     content: "\e911";
 }
-.icon-cross:before {
+.icon-cross2:before {
     content: "\e912";
 }
 .icon-checkmark:before {
