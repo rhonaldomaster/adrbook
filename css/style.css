@@ -8,6 +8,9 @@ body{
 h1{
     font-size: 1.8em;
 }
+input,span{
+    box-sizing: border-box;
+}
 .clear{
     clear: both;
 }
@@ -16,7 +19,9 @@ h1{
     text-decoration: none;
 }
 .inside-input{
-    margin-left: -15.6em;
+    left: 0.5em;
+    position:absolute;
+    top:0.7em;
 }
 .textblue{
     color: #55ACEE;
@@ -51,11 +56,11 @@ h1{
     margin-bottom: 2em;
 }
 .footer{
-    bottom: 0;
+    bottom: 0.7em;
     color: #fff;
     cursor: pointer;
-    position: absolute;
-    right: 0;
+    position: fixed;
+    right: 0.3em;
 }
 .button{
     border: 0 none;
@@ -92,7 +97,13 @@ h1{
 }
 .tableform__textinput{
     border: 0 none;
-    border-bottom: 0.1em solid lightgray;
+    border-bottom: 1px solid lightgray;
     padding: 0.4em;
     width: 90%;
+}
+@media screen and (max-width: 980px) {
+    .maincontent{
+        font-size: 9pt;
+        padding: 3em 1em;
+    }
 }

@@ -23,8 +23,10 @@
                 <a class="link" href="index.html">Koombea Contacts</a>
             </div>
             <div class="header__search">
-                <input class="header__search__input" placeholder="Buscar ..."/>
-                <span class="inside-input icon-search"></span>
+                <div class="" style="position:relative;">
+                    <input class="header__search__input" placeholder="Buscar ..."/>
+                    <span class="inside-input icon-search"></span>
+                </div>
             </div>
         </header>
         <article class="maincontent">
@@ -45,19 +47,19 @@
         </div>
         <script id="contact-template" type="text/x-handlebars-template">
             <div class="contact-list__item">
-                <div class="contact-list__item_col">
+                <div class="contact-list__item_col name">
                     <img class="contact-list__item_contactimg" src="img/emilia.png" alt=""/>
                     <span class="bold curpointer" onclick="adrbook.{{funcion}};">{{nombre}}</span>
                 </div>
-                <div class="contact-list__item_col">
+                <div class="contact-list__item_col no_miniscreen">
                     <span class="icon-twitter textblue"></span>
                     <span>{{twitter}}</span>
                 </div>
-                <div class="contact-list__item_col">
+                <div class="contact-list__item_col no_miniscreen">
                     <span class="icon-mail2 textlgray"></span>
                     <span>{{email}}</span>
                 </div>
-                <div class="contact-list__item_col">
+                <div class="contact-list__item_col phone">
                     <span class="icon-phone textlgray"></span>
                     <span>{{telefono}}</span>
                 </div>

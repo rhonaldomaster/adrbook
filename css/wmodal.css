@@ -56,3 +56,43 @@
     top: -0.8em;
     width: 1.5em;
 }
+@media screen and (max-width: 980px) {
+    .wmodal{
+        margin: 1% auto 0 auto;
+        padding: 1em;
+        width: 85%;
+    }
+    .profile-img{
+        height: 6em;
+        width: 6em;
+    }
+    .wmodal__body__left,.wmodal__body__right{
+        display: block;
+        padding: 0.5em;
+        width: 95%;
+    }
+    .wmodal__body__left{
+        padding: 0.3em;
+        width: 96%;
+    }
+    .wmodal__body__right{
+        max-height: 11em;
+    }
+    .wmodal-form{
+        margin-top: 0.2em;
+    }
+    .wmodal__foot{
+        margin-top: 0.5em;
+        text-align: center;
+        width: 100%;
+    }
+    .wmodal .button{
+        width: 100%;
+    }
+    .wmodal .margintop{
+        margin-top: 0.3em;
+    }
+    .contactname{
+        margin-top: 0;
+    }
+}
