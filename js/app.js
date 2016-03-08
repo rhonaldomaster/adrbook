@@ -1,8 +1,3 @@
-//localStorage.setItem("contacts","1;Maria;@mariagal;maria@mail.com;+573103000000;Anywhere;0");
-//localStorage.setItem("favs","1");
-//console.log(localStorage.getItem("favs"));
-//localStorage.removeItem("contacts");
-//localStorage.removeItem("favs");
 $(document).ready(function(){
     adrbook.listContacts();
     adrbook.listFavorites();
@@ -21,7 +16,7 @@ var adrbook = (function() {
             for(i=0;i<lst.length;i++){
                 var elem = lst[i].split(";");
                 if(id==elem[0]){
-                    var isfavo = false;
+                    var isfavo = isfv(elem[0]);
                     cnt.id = elem[0];
                     cnt.nombre = elem[1];
                     cnt.twitter = elem[2];
@@ -70,7 +65,7 @@ var adrbook = (function() {
         if(element.hasClass("textyellow")){
             element.removeClass("textyellow");
             element.addClass("textlgray");
-            var afavs = favs.split("|");
+            var afavs = listfavs.split("|");
 			$.each(afavs,function(i2,v){
 				if(id!=v){
 					if(i2>0) flist += "|";
@@ -159,6 +154,8 @@ var adrbook = (function() {
         }
         alert("Datos actualizados");
         cmodal();
+        lcontacts();
+        listfavorites();
     };
     var cantcontacts = function(){
         var cant = 0;
@@ -204,7 +201,7 @@ var adrbook = (function() {
         var ctmpl = $("#contact-template");
         divcnt.html("");
         if(listfavs) {
-            var lst = listfavs.split("|");
+            var lst = (listfavs+"").split("|");
             var source = ctmpl.html();
             var template = Handlebars.compile(source);
             for(var i=0;i<lst.length;i++){
@@ -229,3 +226,11 @@ var adrbook = (function() {
         listFavorites: listfavorites
     };
 })();
+/*
+//Testing only:
+localStorage.setItem("contacts","1;Maria;@mariagal;maria@mail.com;+573103000000;Anywhere;0");
+localStorage.setItem("favs","1");
+console.log(localStorage.getItem("favs"));
+localStorage.removeItem("contacts");
+localStorage.removeItem("favs");
+*/
