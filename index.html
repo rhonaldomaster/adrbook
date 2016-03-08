@@ -47,7 +47,7 @@
             <div class="contact-list__item">
                 <div class="contact-list__item_col">
                     <img class="contact-list__item_contactimg" src="img/emilia.png" alt=""/>
-                    <span class="bold curpointer" onclick="adrbook.{{funcion}}();">{{nombre}}</span>
+                    <span class="bold curpointer" onclick="adrbook.{{funcion}};">{{nombre}}</span>
                 </div>
                 <div class="contact-list__item_col">
                     <span class="icon-twitter textblue"></span>
@@ -62,7 +62,7 @@
                     <span>{{telefono}}</span>
                 </div>
                 <div class="contact-list__item_col contact-list__item_col_fav">
-                    <span class="icon-star-full {{startype}} curpointer" onclick="adrbook.fav({{twit}});"></span>
+                    <span class="icon-star-full {{startype}} curpointer" onclick="adrbook.addFavorite({{id}},this);"></span>
                 </div>
             </div>
         </script>
@@ -82,27 +82,27 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td class="textlgray">Nombre:</td>
-                                <td><input type="text" name="nombre" class="tableform__textinput" value="{{nombre}}"/></td>
+                                <td><input type="text" id="nombre" name="nombre" class="tableform__textinput" value="{{nombre}}"/></td>
                             </tr>
                             <tr>
                                 <td><span class="icon-twitter textblue"></span></td>
                                 <td class="textlgray">Twitter:</td>
-                                <td><input type="text" name="twitter" class="tableform__textinput" value="{{twitter}}"/></td>
+                                <td><input type="text" id="twitter" name="twitter" class="tableform__textinput" value="{{twitter}}"/></td>
                             </tr>
                             <tr>
                                 <td><span class="icon-mail2 textlgray"></span></td>
                                 <td class="textlgray">Email:</td>
-                                <td><input type="text" name="email" class="tableform__textinput" value="{{email}}"/></td>
+                                <td><input type="text" id="email" name="email" class="tableform__textinput" value="{{email}}"/></td>
                             </tr>
                             <tr>
                                 <td><span class="icon-phone textlgray"></span></td>
                                 <td class="textlgray">Tel&eacute;fono:</td>
-                                <td><input type="text" name="telefono" class="tableform__textinput" value="{{telefono}}"/></td>
+                                <td><input type="text" id="telefono" name="telefono" class="tableform__textinput" value="{{telefono}}"/></td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td class="textlgray">Direcci&oacute;n:</td>
-                                <td><input type="text" name="direccion" class="tableform__textinput" value="{{direccion}}"/></td>
+                                <td><input type="text" id="direccion" name="direccion" class="tableform__textinput" value="{{direccion}}"/></td>
                             </tr>
                         </table>
                     </form>
