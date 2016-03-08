@@ -1,28 +1,27 @@
-//window.localStorage.setItem("contacts","1;Maria;@mariagal;maria@mail.com";+573103000000;Anywhere;0);
-//window.localStorage.removeItem("contacts");
-//window.localStorage.setItem("favs","1");
-//console.log(window.localStorage.getItem("favs"));
-//window.localStorage.removeItem("favs");
+//localStorage.setItem("contacts","1;Maria;@mariagal;maria@mail.com;+573103000000;Anywhere");
+//localStorage.setItem("favs","1");
+//console.log(localStorage.getItem("favs"));
+//localStorage.removeItem("contacts");
+//localStorage.removeItem("favs");
 $(document).ready(function(){
     adrbook.listContacts();
     adrbook.listFavorites();
 });
 var adrbook = (function() {
     var dmodal = $(".bgmodal");
-    var datousr = {
-        id:0,nombre:"",twitter:"",email:"",telefono:"",
-        direccion:"",funcion:"createContact()",modify:false,startype:"textlgray"
-    };
     var listcontacts = "";
     var listfavs = "";
     var scontact = function(id) {
-        var cnt = datousr;
+        var cnt = {
+            id:0,nombre:"",twitter:"",email:"",telefono:"",
+            direccion:"",funcion:"createContact()",modify:false,startype:"textlgray"
+        };
         if(listcontacts){
             var lst = listcontacts.split("|");
             for(i=0;i<lst.length;i++){
                 var elem = lst[i].split(";");
                 if(id==elem[0]){
-                    var isfavo = isfv(elem[0]);
+                    var isfavo = false;
                     cnt.id = elem[0];
 					cnt.nombre = elem[1];
 					cnt.twitter = elem[2];
@@ -42,9 +41,22 @@ var adrbook = (function() {
         omodal(usr);
     };
     var omodal = function(datos) {
-        var source = $("#wmodal-template").html();
+        console.log(datos);
+        $(".wmodal").html("");
+        var source = "";
+        var contx = "";
+        if(typeof datos === "undefined"){
+            source = $("#wmodal-template-create").html();
+            contx = {
+                id:0,nombre:"",twitter:"",email:"",telefono:"",
+                direccion:"",funcion:"createContact()",modify:false,startype:"textlgray"
+            };
+        }
+        else{
+            source = $("#wmodal-template").html();
+            contx = datos;
+        }
         var template = Handlebars.compile(source);
-        var contx = (typeof datos === "undefined")?datousr:datos;
         $(".wmodal").html(template(contx));
         dmodal.show();
     };
@@ -65,9 +77,9 @@ var adrbook = (function() {
 					flist += v;
 				}
 			});
-            if(flist=="") window.localStorage.removeItem("favs");
+            if(flist=="") localStorage.removeItem("favs");
             else {
-                window.localStorage.setItem("favs",flist);
+                localStorage.setItem("favs",flist);
             }
         }
         else{
@@ -76,7 +88,7 @@ var adrbook = (function() {
                 nuevo = true;
             }
             else listfavs += "|"+id;
-            window.localStorage.setItem("favs",listfavs);
+            localStorage.setItem("favs",listfavs);
             element.addClass("textyellow");
             var divcnt = $(".maincontent__favorites .contact-list");
             var ctmpl = $("#contact-template");
@@ -113,7 +125,7 @@ var adrbook = (function() {
         }
         lc += nxtid+";"+nombre+";"+twitter+";"+email+";"+telefono+";"+direccion;
         listcontacts = lc;
-        window.localStorage.setItem("contacts",lc);
+        localStorage.setItem("contacts",lc);
         alert("Contacto agregado!");
         cmodal();
         var cnt = {
@@ -142,28 +154,28 @@ var adrbook = (function() {
             if(id!=vx[0]) flist += v;
             else flist += id+";"+nombre+";"+twitter+";"+email+";"+telefono+";"+direccion;
         });
-        if(flist=="") window.localStorage.removeItem("contacts");
+        if(flist=="") localStorage.removeItem("contacts");
         else {
             listcontacts = flist;
-            window.localStorage.setItem("contacts",flist);
+            localStorage.setItem("contacts",flist);
         }
         alert("Datos actualizados");
         cmodal();
     };
-    var cantcontacts = function() {
+    var cantcontacts = function(){
         var cant = 0;
         if(listcontacts){
             var lst = listcontacts.split("|");
             cant = lst.length;
         }
         return cant;
-    }
+    };
     var lcontacts = function() {
         var divcnt = $(".maincontent__contacts .contact-list");
         var ctmpl = $("#contact-template");
         divcnt.html("");
         var cnt = {id:0,nombre:"",twitter:"",email:"",telefono:"",direccion:"",funcion:"createContact()",modify:false,startype:"textlgray"};
-        listcontacts = window.localStorage.getItem("contacts");
+        listcontacts = localStorage.getItem("contacts");
         if(listcontacts){
             var lst = listcontacts.split("|");
             var source = ctmpl.html();
@@ -189,11 +201,11 @@ var adrbook = (function() {
             divcnt.html(template());
         }
     };
-    var lfavs = function() {
+    var listfavorites = function() {
         var divcnt = $(".maincontent__favorites .contact-list");
         var ctmpl = $("#contact-template");
         divcnt.html("");
-        listfavs = window.localStorage.getItem("favs");
+        listfavs = localStorage.getItem("favs");
         if(listfavs) {
             var lst = listfavs.split("|");
             var source = ctmpl.html();
@@ -217,6 +229,6 @@ var adrbook = (function() {
         createContact: ccontact,
         updateContact: econtact,
         listContacts: lcontacts,
-        listFavorites: lfavs
+        listFavorites: listfavorites
     };
 })();

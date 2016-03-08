@@ -115,6 +115,55 @@
                 <button class="button button-primary" onclick="adrbook.{{funcion}};">Guardar</button>
             </div>
         </script>
+        <script id="wmodal-template-create" type="text/x-handlebars-template">
+            <div class="wmodal__body">
+                <div class="wmodal__body__left">
+                    <img class="profile-img" src="img/emilia.png" alt="userimage"/>
+                    <div class="contactname margintop">{{nombre}}</div>
+                    {{#if modify}}
+                    <button class="button button-primary button-favorite margintop">Agregar a favoritos</button>
+                    {{/if}}
+                </div>
+                <div class="wmodal__body__right">
+                    Contacto
+                    <form class="wmodal-form" action="#">
+                        <table class="tableform">
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="textlgray">Nombre:</td>
+                                <td><input type="text" id="nombre" name="nombre" class="tableform__textinput" value="{{nombre}}"/></td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-twitter textblue"></span></td>
+                                <td class="textlgray">Twitter:</td>
+                                <td><input type="text" id="twitter" name="twitter" class="tableform__textinput" value="{{twitter}}"/></td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-mail2 textlgray"></span></td>
+                                <td class="textlgray">Email:</td>
+                                <td><input type="text" id="email" name="email" class="tableform__textinput" value="{{email}}"/></td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-phone textlgray"></span></td>
+                                <td class="textlgray">Tel&eacute;fono:</td>
+                                <td><input type="text" id="telefono" name="telefono" class="tableform__textinput" value="{{telefono}}"/></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="textlgray">Direcci&oacute;n:</td>
+                                <td><input type="text" id="direccion" name="direccion" class="tableform__textinput" value="{{direccion}}"/></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="wmodal__foot margintop">
+                <button class="button button-cancel" onclick="adrbook.closeModal();">Cancelar</button>
+                <div class="button-horizontal-separator"></div>
+                <button class="button button-primary" onclick="adrbook.{{funcion}};">Guardar</button>
+            </div>
+        </script>
         <script id="nocontacts-template" type="text/x-handlebars-template">
             <div class="contact-list__item">No hay contactos a&uacute;n</div>
         </script>
