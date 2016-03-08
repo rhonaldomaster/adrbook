@@ -1,4 +1,4 @@
-//localStorage.setItem("contacts","1;Maria;@mariagal;maria@mail.com;+573103000000;Anywhere");
+//localStorage.setItem("contacts","1;Maria;@mariagal;maria@mail.com;+573103000000;Anywhere;0");
 //localStorage.setItem("favs","1");
 //console.log(localStorage.getItem("favs"));
 //localStorage.removeItem("contacts");
@@ -10,7 +10,7 @@ $(document).ready(function(){
 var adrbook = (function() {
     var dmodal = $(".bgmodal");
     var listcontacts = "";
-    var listfavs = "";
+    var listfavs = localStorage.getItem("favs");
     var scontact = function(id) {
         var cnt = {
             id:0,nombre:"",twitter:"",email:"",telefono:"",
@@ -23,11 +23,11 @@ var adrbook = (function() {
                 if(id==elem[0]){
                     var isfavo = false;
                     cnt.id = elem[0];
-					cnt.nombre = elem[1];
-					cnt.twitter = elem[2];
-					cnt.email = elem[3];
-					cnt.telefono = elem[4];
-					cnt.direccion = elem[5];
+                    cnt.nombre = elem[1];
+                    cnt.twitter = elem[2];
+                    cnt.email = elem[3];
+                    cnt.telefono = elem[4];
+                    cnt.direccion = elem[5];
 					cnt.funcion = "updateContact("+elem[0]+")";
                     cnt.modify = true;
                     cnt.startype = isfavo?"textyellow":"textlgray";
@@ -78,9 +78,7 @@ var adrbook = (function() {
 				}
 			});
             if(flist=="") localStorage.removeItem("favs");
-            else {
-                localStorage.setItem("favs",flist);
-            }
+            else localStorage.setItem("favs",flist);
         }
         else{
             if(!listfavs){
@@ -105,7 +103,7 @@ var adrbook = (function() {
         var listfvs = listfavs;
         if(listfvs){
             var lst = (listfvs+"").split("|");
-            for(i=0;i<lst.length;i++){
+            for(var i=0;i<lst.length;i++){
                 if(id==lst[i]) isf = true;
             }
         }
@@ -180,16 +178,16 @@ var adrbook = (function() {
             var lst = listcontacts.split("|");
             var source = ctmpl.html();
             var template = Handlebars.compile(source);
-            for(i=0;i<lst.length;i++){
+            for(var i=0;i<lst.length;i++){
                 var elem = lst[i].split(";");
                 var isfavo = isfv(elem[0]);
                 cnt.id = elem[0];
-				cnt.nombre = elem[1];
-				cnt.twitter = elem[2];
-				cnt.email = elem[3];
-				cnt.telefono = elem[4];
-				cnt.direccion = elem[5];
-				cnt.funcion = "editContact("+elem[0]+")";
+                cnt.nombre = elem[1];
+                cnt.twitter = elem[2];
+                cnt.email = elem[3];
+                cnt.telefono = elem[4];
+                cnt.direccion = elem[5];
+                cnt.funcion = "editContact("+elem[0]+")";
                 cnt.modify = true;
                 cnt.startype = isfavo?"textyellow":"textlgray";
                 divcnt.append(template(cnt));
@@ -205,12 +203,11 @@ var adrbook = (function() {
         var divcnt = $(".maincontent__favorites .contact-list");
         var ctmpl = $("#contact-template");
         divcnt.html("");
-        listfavs = localStorage.getItem("favs");
         if(listfavs) {
             var lst = listfavs.split("|");
             var source = ctmpl.html();
             var template = Handlebars.compile(source);
-            for(i=0;i<lst.length;i++){
+            for(var i=0;i<lst.length;i++){
                 var cnt = scontact(lst[i]);
                 divcnt.append(template(cnt));
 			}
