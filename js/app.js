@@ -4,9 +4,6 @@ $(document).ready(function(){
     $(".js-openModal").click(function(){
         adrbook.openModal();
     });
-    $(".js-closeModal").click(function(){
-        adrbook.closeModal();
-    });
 });
 var adrbook = (function() {
     var dmodal = $(".bgmodal");
@@ -59,6 +56,9 @@ var adrbook = (function() {
         var template = Handlebars.compile(source);
         $(".wmodal").html(template(contx));
         dmodal.show();
+        $(".js-closeModal").click(function(){
+            hideModal();
+        });
     };
     var hideModal = function() {
         dmodal.hide();
@@ -67,7 +67,9 @@ var adrbook = (function() {
         var flist = "";
         var nuevo = false;
         var element = $(elem);
-        if(element.hasClass("textyellow")){
+        var isfavo = isFavorite(id);
+        console.log("procesando "+id+" en favoritos");
+        if(isfavo){
             element.removeClass("textyellow");
             element.addClass("textlgray");
             var afavs = (listfavs+"").split("|");
@@ -77,13 +79,11 @@ var adrbook = (function() {
 					flist += v;
 				}
 			});
-            if(flist=="") localStorage.removeItem("adrbfavorites");
-            else localStorage.setItem("adrbfavorites",flist);
             listfavs = flist;
-            setTimeout(function () {
-                viewFavorites();
-                viewContacts();
-            },500);
+            localStorage.setItem("adrbfavorites",listfavs);
+            console.log("eliminando "+id+" como favorito, lista queda como "+listfavs);
+            viewFavorites();
+            viewContacts();
         }
         else{
             if(!listfavs){
@@ -92,6 +92,8 @@ var adrbook = (function() {
             }
             else listfavs += "|"+id;
             localStorage.setItem("adrbfavorites",listfavs);
+            console.log("agregando "+id+" como favorito, lista queda como "+listfavs);
+            element.removeClass("textlgray");
             element.addClass("textyellow");
             var divcnt = $(".maincontent__favorites .contact-list");
             var ctmpl = $("#contact-template");
@@ -100,9 +102,6 @@ var adrbook = (function() {
             var template = Handlebars.compile(source);
             var cnt = searchContact(id);
             divcnt.append(template(cnt));
-            setTimeout(function () {
-                bindClickStars();
-            },500);
         }
     };
     var isFavorite = function(id){
@@ -147,6 +146,7 @@ var adrbook = (function() {
         var source = ctmpl.html();
         var template = Handlebars.compile(source);
         divcnt.append(template(cnt));
+        bindClickStars();
     };
     var updateContact = function(id) {
         var nombre = $.trim($("#nombre").val());
@@ -236,7 +236,8 @@ var adrbook = (function() {
         }
     };
     var bindClickStars = function() {
-        $(".icon-star-full").click(function(){
+        $(".icon-star-full").off("click");
+        $(".icon-star-full").on("click",function(){
             var id = $(this).data("id");
             addToFavorite(id,this);
         });
