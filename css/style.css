@@ -101,7 +101,7 @@ input,span{
 }
 .tableform__textinput{
     border: 0 none;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 2px solid lightgray;
     padding: 0.4em;
     width: 90%;
 }
@@ -109,5 +109,9 @@ input,span{
     .maincontent{
         font-size: 9pt;
         padding: 3em 1em;
+    }
+    .button-horizontal-separator{
+        display: block;
+        margin-top: 0.3em;
     }
 }
