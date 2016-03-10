@@ -297,7 +297,6 @@ var adrbook = (function() {
                 idn++;
             }
         });
-        console.log(flist);
         listcontacts = flist;
         localStorage.setItem("adrbcontacts",listcontacts);
         Lobibox.notify('success',{
