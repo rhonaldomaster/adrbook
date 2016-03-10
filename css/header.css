@@ -21,7 +21,10 @@
     margin-left: 20%;
     width: 40%;
 }
-.header__search__input{
+.header__search_div{
+    position:relative;
+}
+.header__search_div__input{
     background-color: rgba(255, 255, 255, 0.3);
     border: 0 none;
     border-radius: 0.3em;
