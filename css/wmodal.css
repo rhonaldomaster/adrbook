@@ -14,7 +14,7 @@
     margin: 10% auto;
     padding: 2em;
     position: relative;
-    width: 50%;
+    max-width: 900px;
     z-index: 4;
 }
 .wmodal__body__left{

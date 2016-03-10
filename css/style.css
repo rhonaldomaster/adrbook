@@ -84,6 +84,10 @@ input,span{
 .button-favorite{
     width: 100%;
 }
+.button-remove{
+    background-color: #F4511E;
+    width: 100%;
+}
 .button-circle{
     border-radius: 100%;
     padding: 0.5em;

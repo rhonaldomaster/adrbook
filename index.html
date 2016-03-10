@@ -15,6 +15,7 @@
 		<link rel="stylesheet" href="css/header.css"/>
 		<link rel="stylesheet" href="css/contactlist.css"/>
 		<link rel="stylesheet" href="css/wmodal.css"/>
+        <link rel="stylesheet" href="css/lobibox.min.css"/>
 		<!-- /css -->
     </head>
     <body>
@@ -40,7 +41,7 @@
             </section>
         </article>
         <footer class="footer">
-            <span class="icon-plus button-primary button-circle" onclick="adrbook.openModal();"></span>
+            <span class="icon-plus button-primary button-circle js-openModal"></span>
         </footer>
         <div class="bgmodal">
             <div class="wmodal"></div>
@@ -64,7 +65,7 @@
                     <span>{{telefono}}</span>
                 </div>
                 <div class="contact-list__item_col contact-list__item_col_fav">
-                    <span class="icon-star-full {{startype}} curpointer" onclick="adrbook.addFavorite({{id}},this);"></span>
+                    <span data-id="{{id}}" class="icon-star-full {{startype}} curpointer"></span>
                 </div>
             </div>
         </script>
@@ -75,6 +76,7 @@
                     <div class="contactname margintop">{{nombre}}</div>
                     {{#if modify}}
                     <button class="button button-primary button-favorite margintop" onclick="adrbook.addFavorite({{id}},this);">Agregar a favoritos</button>
+                    <button class="button button-primary button-remove margintop" onclick="adrbook.deleteContact({{id}});">Eliminar</button>
                     {{/if}}
                 </div>
                 <div class="wmodal__body__right">
@@ -112,7 +114,7 @@
             </div>
             <div class="clear"></div>
             <div class="wmodal__foot margintop">
-                <button class="button button-cancel" onclick="adrbook.closeModal();">Cancelar</button>
+                <button class="button button-cancel js-closeModal">Cancelar</button>
                 <div class="button-horizontal-separator"></div>
                 <button class="button button-primary" onclick="adrbook.{{funcion}};">Guardar</button>
             </div>
@@ -122,9 +124,6 @@
                 <div class="wmodal__body__left">
                     <img class="profile-img" src="img/emilia.png" alt="userimage"/>
                     <div class="contactname margintop">{{nombre}}</div>
-                    {{#if modify}}
-                    <button class="button button-primary button-favorite margintop">Agregar a favoritos</button>
-                    {{/if}}
                 </div>
                 <div class="wmodal__body__right">
                     Contacto
@@ -171,6 +170,8 @@
         </script>
         <script src="js/jquery.js"></script>
         <script src="js/handlebars.js"></script>
+        <script src="js/lobibox.min.js"></script>
+        <script src="js/notifications.min.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>
