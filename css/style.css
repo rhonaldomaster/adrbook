@@ -105,6 +105,23 @@ input,span{
     padding: 0.4em;
     width: 90%;
 }
+::-webkit-input-placeholder {
+    color: #fff;
+}
+:-moz-placeholder {
+    color: #fff;
+    opacity: 1;
+}
+::-moz-placeholder {
+    color: #fff;
+    opacity: 1;
+}
+:-ms-input-placeholder {
+    color: #fff;
+}
+:placeholder-shown {
+    color: #fff;
+}
 @media screen and (max-width: 980px) {
     .maincontent{
         font-size: 9pt;
