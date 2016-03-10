@@ -1,7 +1,8 @@
 $(document).ready(function(){
     adrbook.listContacts();
     adrbook.listFavorites();
-    $(".js-openModal").click(function(){
+    $(".js-openModal").off("click");
+    $(".js-openModal").on("click",function(){
         adrbook.openModal();
     });
 });
@@ -245,7 +246,8 @@ var adrbook = (function() {
         });
     };
     var bindCloseModal = function() {
-        $(".js-closeModal").click(function(){
+        $(".js-closeModal").off("click");
+        $(".js-closeModal").on("click",function(){
             hideModal();
         });
     };
