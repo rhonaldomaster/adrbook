@@ -50,7 +50,7 @@
             <div class="contact-list__item">
                 <div class="contact-list__item_col name">
                     <img class="contact-list__item_contactimg" src="img/emilia.png" alt=""/>
-                    <span class="bold curpointer" onclick="adrbook.{{funcion}};">{{nombre}}</span>
+                    <span class="bold curpointer js-viewContact" data-id="{{id}}">{{nombre}}</span>
                 </div>
                 <div class="contact-list__item_col no_miniscreen">
                     <span class="icon-twitter textblue"></span>
@@ -75,8 +75,8 @@
                     <img class="profile-img" src="img/emilia.png" alt="userimage"/>
                     <div class="contactname margintop">{{nombre}}</div>
                     {{#if modify}}
-                    <button class="button button-primary button-favorite margintop" onclick="adrbook.addFavorite({{id}},this);">Agregar a favoritos</button>
-                    <button class="button button-primary button-remove margintop" onclick="adrbook.deleteContact({{id}});">Eliminar</button>
+                    <button data-id="{{id}}" class="button button-primary button-favorite margintop js-addFavorite">Agregar a favoritos</button>
+                    <button data-id="{{id}}" class="button button-primary button-remove margintop js-deleteContact">Eliminar</button>
                     {{/if}}
                 </div>
                 <div class="wmodal__body__right">
@@ -116,7 +116,7 @@
             <div class="wmodal__foot margintop">
                 <button class="button button-cancel js-closeModal">Cancelar</button>
                 <div class="button-horizontal-separator"></div>
-                <button class="button button-primary" onclick="adrbook.{{funcion}};">Guardar</button>
+                <button class="button button-primary js-saveButton" data-id="{{id}}">Guardar</button>
             </div>
         </script>
         <script id="wmodal-template-create" type="text/x-handlebars-template">
@@ -160,9 +160,9 @@
             </div>
             <div class="clear"></div>
             <div class="wmodal__foot margintop">
-                <button class="button button-cancel" onclick="adrbook.closeModal();">Cancelar</button>
+                <button class="button button-cancel js-closeModal">Cancelar</button>
                 <div class="button-horizontal-separator"></div>
-                <button class="button button-primary" onclick="adrbook.{{funcion}};">Guardar</button>
+                <button class="button button-primary js-createContact">Crear</button>
             </div>
         </script>
         <script id="nocontacts-template" type="text/x-handlebars-template">
