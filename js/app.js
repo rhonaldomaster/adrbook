@@ -74,12 +74,12 @@ var adrbook = (function() {
             element.removeClass("textyellow");
             element.addClass("textlgray");
             var afavs = (listfavs+"").split("|");
-			$.each(afavs,function(i2,v){
-				if(id!=v){
-					if(i2>0) flist += "|";
-					flist += v;
-				}
-			});
+      			$.each(afavs,function(i2,v){
+        				if(id!=v){
+          					if(flist!="") flist += "|";
+          					flist += v;
+        				}
+      			});
             listfavs = flist;
             localStorage.setItem("adrbfavorites",listfavs);
             viewFavorites();
@@ -159,7 +159,7 @@ var adrbook = (function() {
         var flist = "";
         $.each(alcont,function(i2,v){
             var vx = v.split(";");
-            if(i2>0) flist += "|";
+            if(flist!="") flist += "|";
             if(id!=vx[0]) flist += v;
             else flist += id+";"+nombre+";"+twitter+";"+email+";"+telefono+";"+direccion;
         });
@@ -292,7 +292,7 @@ var adrbook = (function() {
         $.each(alcont,function(i2,v){
             var vx = v.split(";");
             if(id!=vx[0]){
-                if(i2>0) flist += "|";
+                if(flist!="") flist += "|";
                 flist += idn+";"+vx[1]+";"+vx[2]+";"+vx[3]+";"+vx[4]+";"+vx[5];
                 idn++;
             }
