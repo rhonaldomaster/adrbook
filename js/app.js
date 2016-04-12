@@ -1,335 +1,231 @@
 $(document).ready(function(){
+    adrbook.init();
     adrbook.listContacts();
     adrbook.listFavorites();
-    $(".js-openModal").off("click");
-    $(".js-openModal").on("click",function(){
+    $(".js-openModal").off("click").on("click",function(){
         adrbook.openModal();
     });
 });
-var adrbook = (function() {
-    var dmodal = $(".bgmodal");
-    var listcontacts = "";
-    var listfavs = localStorage.getItem("adrbfavorites");
-    var searchContact = function(id) {
-        var cnt = {
-            id:0,nombre:"",twitter:"",email:"",telefono:"",
-            direccion:"",modify:false,startype:"textlgray"
-        };
-        if(listcontacts){
-            var lst = listcontacts.split("|");
-            for(i=0;i<lst.length;i++){
-                var elem = lst[i].split(";");
-                if(id==elem[0]){
-                    var isfavo = isFavorite(elem[0]);
-                    cnt.id = elem[0];
-                    cnt.nombre = elem[1];
-                    cnt.twitter = elem[2];
-                    cnt.email = elem[3];
-                    cnt.telefono = elem[4];
-                    cnt.direccion = elem[5];
-                    cnt.modify = true;
-                    cnt.startype = isfavo?"textyellow":"textlgray";
-				}
-			}
-        }
-        return cnt;
+var adrbook = (function () {
+  var contacts = null;
+  var init = function () {
+    contacts = localStorage.getItem("adrbcontacts");
+    if(contacts) contacts = JSON.parse(contacts);
+    searchFavorites();
+  };
+  var renderContact = function (cnt) {
+    var $ctmpl = $("#contact-template");
+    var source = $ctmpl.html();
+    var template = Handlebars.compile(source);
+    var html = template(cnt);
+    return html;
+  };
+  var isFavorite = function(id){
+    var isf = false;
+    if(contacts){
+      $.each(contacts,function (ixd,obj) {
+        if(obj!= null && obj.id==id && obj.startype=="textyellow") isf = true;
+      });
     }
-    var viewEditModal = function(id) {
-        var usr = searchContact(id);
-        showModal(usr);
+    return isf;
+  };
+  var searchFavorites = function () {
+    var favorites = [];
+    if(contacts){
+      $.each(contacts,function (ixd,obj) {
+        if(obj.startype=="textyellow") favorites.push(obj);
+      });
+    }
+    return favorites;
+  };
+  var countContacts = function(){
+    return contacts.length;
+  };
+  var saveContacts = function () {
+    var strc = JSON.stringify(contacts);
+    localStorage.setItem("adrbcontacts",strc);
+  };
+  var listContactsType = function (div,arrContacts) {
+    var $divcnt = $(div);
+    $divcnt.html("");
+    $.each(arrContacts,function (ixd,obj) {
+      var isf = isFavorite(obj.id);
+      if(isf) obj.startype = "textyellow";
+      var cnthtml = renderContact(obj);
+      $divcnt.append(cnthtml);
+    });
+    bindviewContact();
+    bindClickStars();
+  };
+  var setEmptyContacts = function (div) {
+    var source = $("#nocontacts-template").html();
+    var template = Handlebars.compile(source);
+    $(div).html(template());
+  };
+  var createContact = function () {
+    var nombre = $.trim($("#nombre").val());
+    var twitter = $.trim($("#twitter").val());
+    var email = $.trim($("#email").val());
+    var telefono = $.trim($("#telefono").val());
+    var direccion = $.trim($("#direccion").val());
+    var nxtid = countContacts() + 1;
+    var cnt = {
+      "id":nxtid,"nombre":nombre,"twitter":twitter,
+      "email":email,"telefono":telefono,"direccion":direccion,
+      "modify":"true","startype":"textlgray"
     };
-    var showModal = function(datos) {
-        $(".wmodal").html("");
-        var source = "";
-        var contx = "";
-        if(typeof datos === "undefined"){
-            source = $("#wmodal-template-create").html();
-            contx = {
-                id:0,nombre:"",twitter:"",email:"",telefono:"",
-                direccion:"",modify:false,startype:"textlgray"
-            };
-        }
-        else{
-            source = $("#wmodal-template").html();
-            contx = datos;
-        }
-        var template = Handlebars.compile(source);
-        $(".wmodal").html(template(contx));
-        dmodal.fadeIn();
-        bindCloseModal();
-        addToFavoriteBtn();
-        bindCreateContact();
-        bindUpdateContact();
-        bindRemoveContact();
-    };
-    var hideModal = function() {
-        dmodal.fadeOut();
-    };
-    var addToFavorite = function(id,elem){
-        var flist = "";
-        var nuevo = false;
-        var element = $(elem);
-        var isfavo = isFavorite(id);
-        if(isfavo){
-            element.removeClass("textyellow");
-            element.addClass("textlgray");
-            var afavs = (listfavs+"").split("|");
-      			$.each(afavs,function(i2,v){
-        				if(id!=v){
-          					if(flist!="") flist += "|";
-          					flist += v;
-        				}
-      			});
-            listfavs = flist;
-            localStorage.setItem("adrbfavorites",listfavs);
-            viewFavorites();
-            viewContacts();
-        }
-        else{
-            if(!listfavs){
-                listfavs = id;
-                nuevo = true;
-            }
-            else listfavs += "|"+id;
-            localStorage.setItem("adrbfavorites",listfavs);
-            element.removeClass("textlgray");
-            element.addClass("textyellow");
-            var divcnt = $(".maincontent__favorites .contact-list");
-            var ctmpl = $("#contact-template");
-            if(nuevo) divcnt.html("");
-            var source = ctmpl.html();
-            var template = Handlebars.compile(source);
-            var cnt = searchContact(id);
-            divcnt.append(template(cnt));
-            viewContacts();
-        }
-    };
-    var isFavorite = function(id){
-        var isf = false;
-        var listfvs = listfavs;
-        if(listfvs){
-            var lst = (listfvs+"").split("|");
-            for(var i=0;i<lst.length;i++){
-                if(id==lst[i]) isf = true;
-            }
-        }
-        return isf;
-    };
-    var addContact = function() {
-        var nxtid = countContacts() + 1;
-        var lc = "";
-        var nombre = $.trim($("#nombre").val());
-        var twitter = $.trim($("#twitter").val());
-        var email = $.trim($("#email").val());
-        var telefono = $.trim($("#telefono").val());
-        var direccion = $.trim($("#direccion").val());
-        if(listcontacts!="" && listcontacts!=null){
-            lc = listcontacts;
-            lc += "|";
-        }
-        lc += nxtid+";"+nombre+";"+twitter+";"+email+";"+telefono+";"+direccion;
-        listcontacts = lc;
-        localStorage.setItem("adrbcontacts",lc);
-        Lobibox.notify('success',{
-            size: 'mini', rounded: true,
-            msg:"Contacto agregado!"
-        });
-        hideModal();
-        var cnt = {
-            id:nxtid,nombre:nombre,twitter:twitter,
-            email:email,telefono:telefono,direccion:direccion,
-            modify:true,startype:"textlgray"
-        };
-        var divcnt = $(".maincontent__contacts .contact-list");
-        var ctmpl = $("#contact-template");
-        if(cnt.id==1) divcnt.html("");
-        var source = ctmpl.html();
-        var template = Handlebars.compile(source);
-        divcnt.append(template(cnt));
-        bindClickStars();
-        bindviewContact();
-    };
-    var updateContact = function(id) {
-        var nombre = $.trim($("#nombre").val());
-        var twitter = $.trim($("#twitter").val());
-        var email = $.trim($("#email").val());
-        var telefono = $.trim($("#telefono").val());
-        var direccion = $.trim($("#direccion").val());
-        var alcont = (listcontacts+"").split("|");
-        var flist = "";
-        $.each(alcont,function(i2,v){
-            var vx = v.split(";");
-            if(flist!="") flist += "|";
-            if(id!=vx[0]) flist += v;
-            else flist += id+";"+nombre+";"+twitter+";"+email+";"+telefono+";"+direccion;
-        });
-        if(flist=="") localStorage.removeItem("adrbcontacts");
-        else {
-            listcontacts = flist;
-            localStorage.setItem("adrbcontacts",flist);
-        }
-        Lobibox.notify('success',{
-            size: 'mini', rounded: true,
-            msg:"Datos actualizados!"
-        });
-        hideModal();
-        viewContacts();
-        viewFavorites();
-    };
-    var countContacts = function(){
-        var cant = 0;
-        if(listcontacts){
-            var lst = listcontacts.split("|");
-            cant = lst.length;
-        }
-        return cant;
-    };
-    var viewContacts = function() {
-        var divcnt = $(".maincontent__contacts .contact-list");
-        var ctmpl = $("#contact-template");
-        divcnt.html("");
-        var cnt = {id:0,nombre:"",twitter:"",email:"",telefono:"",direccion:"",funcion:"createContact()",modify:false,startype:"textlgray"};
-        listcontacts = localStorage.getItem("adrbcontacts");
-        if(listcontacts){
-            var lst = listcontacts.split("|");
-            var source = ctmpl.html();
-            var template = Handlebars.compile(source);
-            for(var i=0;i<lst.length;i++){
-                var elem = lst[i].split(";");
-                var isfavo = isFavorite(elem[0]);
-                cnt.id = elem[0];
-                cnt.nombre = elem[1];
-                cnt.twitter = elem[2];
-                cnt.email = elem[3];
-                cnt.telefono = elem[4];
-                cnt.direccion = elem[5];
-                cnt.funcion = "viewContact("+elem[0]+")";
-                cnt.modify = true;
-                cnt.startype = isfavo?"textyellow":"textlgray";
-                divcnt.append(template(cnt));
-			}
-            bindClickStars();
-            bindviewContact();
+    contacts.push(cnt);
+    saveContacts();
+    bindClickStars();
+    bindviewContact();
+    closeModal();
+  };
+  var closeModal = function() {
+    $(".bgmodal").fadeOut();
+  };
+  var searchContact = function (id) {
+    var contact = null;
+    $.each(contacts,function (ixd,obj) {
+      if(id==obj.id) contact = obj;
+    });
+    return contact;
+  };
+  var addFavorite = function(id,elem){
+    var $element = $(elem);
+    $.each(contacts,function (ixd,obj) {
+      if(obj.id==id){
+        if(obj.startype == "textyellow"){
+          contacts[ixd].startype = "textlgray";
+          $element.removeClass("textyellow").addClass("textlgray");
         }
         else {
-            var source = $("#nocontacts-template").html();
-            var template = Handlebars.compile(source);
-            divcnt.html(template());
+          contacts[ixd].startype = "textyellow";
+          $element.removeClass("textlgray").addClass("textyellow");
         }
-    };
-    var viewFavorites = function() {
-        var divcnt = $(".maincontent__favorites .contact-list");
-        var ctmpl = $("#contact-template");
-        divcnt.html("");
-        if(listfavs) {
-            var lst = (listfavs+"").split("|");
-            var source = ctmpl.html();
-            var template = Handlebars.compile(source);
-            for(var i=0;i<lst.length;i++){
-                var cnt = searchContact(lst[i]);
-                divcnt.append(template(cnt));
-			}
-            bindClickStars();
-            bindviewContact();
-        }
-        else{
-            var source = $("#nocontacts-template").html();
-            var template = Handlebars.compile(source);
-            divcnt.html(template());
-        }
-    };
-    var bindClickStars = function() {
-        $(".icon-star-full").off("click");
-        $(".icon-star-full").on("click",function(){
-            var id = $(this).data("id");
-            addToFavorite(id,this);
-        });
-    };
-    var bindCloseModal = function() {
-        $(".js-closeModal").off("click");
-        $(".js-closeModal").on("click",function(){
-            hideModal();
-        });
-    };
-    var addToFavoriteBtn = function() {
-        $(".js-addFavorite").off("click");
-        $(".js-addFavorite").on("click",function(){
-            var id = $(this).data("id");
-            addToFavorite(id,this);
-        });
-    };
-    var bindUpdateContact = function() {
-        $(".js-saveButton").off("click");
-        $(".js-saveButton").on("click",function(){
-            var id = $(this).data("id");
-            updateContact(id);
-        });
-    };
-    var bindCreateContact = function() {
-        $(".js-createContact").off("click");
-        $(".js-createContact").on("click",function(){
-            addContact();
-        });
-    };
-    var bindRemoveContact = function () {
-        $(".js-deleteContact").off("click");
-        $(".js-deleteContact").on("click",function(){
-            var id = $(this).data("id");
-            removeContact(id);
-        });
-    };
-    var bindviewContact = function () {
-        $(".js-viewContact").off("click");
-        $(".js-viewContact").on("click",function(){
-            var id = $(this).data("id");
-            viewEditModal(id);
-        });
-    };
-    var removeContact = function(id) {
-        var alcont = (listcontacts+"").split("|");
-        var flist = "";
-        var idn = 1;
-        $.each(alcont,function(i2,v){
-            var vx = v.split(";");
-            if(id!=vx[0]){
-                if(flist!="") flist += "|";
-                flist += idn+";"+vx[1]+";"+vx[2]+";"+vx[3]+";"+vx[4]+";"+vx[5];
-                idn++;
-            }
-        });
-        listcontacts = flist;
-        localStorage.setItem("adrbcontacts",listcontacts);
-        Lobibox.notify('success',{
-            size: 'mini', rounded: true,
-            msg: "Contacto eliminado!"
-        });
-        var isfavo = isFavorite(id);
-        if(isfavo) addToFavorite(id);
-        else{
-            viewContacts();
-            viewFavorites();
-        }
-        hideModal();
+      }
+    });
+    listFavorites();
+    listContacts();
+  };
+  var listContacts = function () {
+    if(contacts.length) listContactsType(".maincontent__contacts .contact-list",contacts);
+    else setEmptyContacts(".maincontent__contacts .contact-list");
+  };
+  var listFavorites = function () {
+    var listfvs = searchFavorites();
+    if(listfvs.length) listContactsType(".maincontent__favorites .contact-list",listfvs);
+    else setEmptyContacts(".maincontent__favorites .contact-list");
+  };
+  var viewContact = function (id) {
+    var usr = searchContact(id);
+    openModal(usr);
+  };
+  var openModal = function(datos) {
+    var source = "";
+    var contx = "";
+    if(typeof datos === "undefined"){
+      source = $("#wmodal-template-create").html();
+      contx = {
+        id:0,nombre:"",twitter:"",email:"",telefono:"",
+        direccion:"",modify:false,startype:"textlgray"
+      };
     }
-    return{
-        addFavorite: addToFavorite,
-        viewContact: viewEditModal,
-        openModal: showModal,
-        closeModal: hideModal,
-        createContact: addContact,
-        editContact: updateContact,
-        listContacts: viewContacts,
-        listFavorites: viewFavorites,
-        deleteContact: removeContact
-    };
+    else{
+      source = $("#wmodal-template").html();
+      contx = datos;
+    }
+    var template = Handlebars.compile(source);
+    $(".wmodal").html(template(contx));
+    $(".bgmodal").fadeIn();
+    bindCloseModal();
+    addToFavoriteBtn();
+    bindCreateContact();
+    bindUpdateContact();
+    bindRemoveContact();
+  };
+  var editContact = function(id) {
+      var nombre = $.trim($("#nombre").val());
+      var twitter = $.trim($("#twitter").val());
+      var email = $.trim($("#email").val());
+      var telefono = $.trim($("#telefono").val());
+      var direccion = $.trim($("#direccion").val());
+      $.each(contacts,function (ixd,obj) {
+        if(id==obj.id){
+          contacts[ixd] = {
+            "id":id,"nombre":nombre,"twitter":twitter,
+            "email":email,"telefono":telefono,"direccion":direccion,
+            "modify":obj.modify,"startype":obj.startype
+          };
+        }
+      });
+      Lobibox.notify('success',{
+        size: 'mini', rounded: true,
+        msg:"Datos actualizados!"
+      });
+      saveContacts();
+      closeModal();
+      listContacts();
+      listFavorites();
+  };
+  var deleteContact = function (id) {
+    $.each(contacts,function (ixd,obj) {
+      if(id==obj.id) contacts.splice(ixd,1);
+    });
+    saveContacts();
+    listContacts();
+    listFavorites();
+    closeModal();
+  };
+  var bindClickStars = function() {
+    $(".icon-star-full").off("click").on("click",function(){
+      addFavorite($(this).data("id"),this);
+    });
+  };
+  var bindCloseModal = function() {
+    $(".js-closeModal").off("click").on("click",function(){
+      closeModal();
+    });
+  };
+  var addToFavoriteBtn = function() {
+    $(".js-addFavorite").off("click").on("click",function(){
+      addFavorite($(this).data("id"),this);
+    });
+  };
+  var bindUpdateContact = function() {
+    $(".js-saveButton").off("click").on("click",function(){
+      editContact($(this).data("id"));
+    });
+  };
+  var bindCreateContact = function() {
+    $(".js-createContact").off("click").on("click",function(){
+      createContact();
+    });
+  };
+  var bindRemoveContact = function () {
+    $(".js-deleteContact").off("click");
+    $(".js-deleteContact").on("click",function(){
+      deleteContact($(this).data("id"));
+    });
+  };
+  var bindviewContact = function () {
+    $(".js-viewContact").off("click").on("click",function(){
+      viewContact($(this).data("id"));
+    });
+  };
+  return{
+    init: init,
+    listContacts: listContacts,
+    listFavorites: listFavorites,
+    addFavorite: addFavorite,
+    editContact: editContact,
+    viewContact: viewContact,
+    openModal: openModal,
+    closeModal: closeModal,
+    createContact: createContact,
+    deleteContact: deleteContact
+  };
 })();
-/*
-//Testing only:
-localStorage.setItem("adrbcontacts","1;Maria;@mariagal;maria@mail.com;+573103000000;Anywhere;0");
-localStorage.setItem("adrbfavorites","1");
-console.log(localStorage.getItem("adrbfavorites"));
-localStorage.removeItem("adrbcontacts");
-localStorage.removeItem("adrbfavorites");
-*/
+//localStorage.setItem("adrbcontacts",'[{"id":"1","nombre":"Maria","twitter":"@mariagal","email":"maria@mail.com","telefono":"+573103000000","direccion":"Anywhere","modify":"true","startype":"textlgray"}]');
 //localStorage.removeItem("adrbcontacts");
+//"[{id:1,nombre:'Maria',twitter:'@mariagal',email:'maria@mail.com',telefono:'+573103000000',direccion:'Anywhere',modify:true,startype:'textlgray'}]"
 //console.log(localStorage.getItem("adrbcontacts"));
