@@ -108,7 +108,7 @@ var adrbook = (function () {
     listContacts();
   };
   var listContacts = function () {
-    if(contacts.length) listContactsType(".maincontent__contacts .contact-list",contacts);
+    if(contacts!=null && contacts.length) listContactsType(".maincontent__contacts .contact-list",contacts);
     else setEmptyContacts(".maincontent__contacts .contact-list");
   };
   var listFavorites = function () {
